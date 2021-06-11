@@ -7,14 +7,14 @@ Original file is located at
     https://colab.research.google.com/drive/1dBi99eYOiPuCZH14jbkfD1jGjNMy5JC4
 """
 
-from google.colab import drive
+# from google.colab import drive
 
-drive.mount('/gdrive')
+# drive.mount('/gdrive')
 
-# Specify the directory path where `assignemnt3.ipynb` exists.
-# For example, if you saved `assignment3.ipynb` in `/gdrive/My Drive/cs376/assignment3` directory,
-# then set root = '/gdrive/My Drive/cs376/assignment3'
-gdrive_root = '/gdrive/My Drive/Colab_Notebooks/new_efficiency_1'
+# # Specify the directory path where `assignemnt3.ipynb` exists.
+# # For example, if you saved `assignment3.ipynb` in `/gdrive/My Drive/cs376/assignment3` directory,
+# # then set root = '/gdrive/My Drive/cs376/assignment3'
+# gdrive_root = '/gdrive/My Drive/Colab_Notebooks/new_efficiency_1'
 
 import os
 import shutil
