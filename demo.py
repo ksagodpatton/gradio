@@ -158,11 +158,7 @@ def processing(image1, image2, image3, image4):
   
   return to_pil_image(load_image(img[idx])), brands[idx], introductions[idx]
 
-  outputs = [
-             gr.outputs.Image(),
-             gr.outputs.Textbox(),
-             gr.outputs.Textbox()
-  ]
+outputs = [gr.outputs.Image(), gr.outputs.Textbox(), gr.outputs.Textbox()]
 
 title = "Find my style, find my brand"
 description = "Nowadays, fashion represents one's identity. Which brand has the same fashion identity with you?\nFind your brand by simply uploading your daily fashion styles!"
