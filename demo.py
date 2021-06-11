@@ -168,4 +168,4 @@ examples = [
     ["example_images/examplepicture2.jpg"]
 ]
 
-gr.Interface(processing, inputs, outputs, title=title, description=description, example=examples).launch(debug=True)
+gr.Interface(processing, inputs, outputs, title=title, description=description, examples=examples).launch(debug=True)
