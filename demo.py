@@ -32,7 +32,9 @@ from PIL import ImageOps
 
 
 model = EfficientNetB0()
-model.load_state_dict(torch.load("lastest.pt"))
+checkpoint=torch.load("lastest.pt", map_location='cpu')
+
+model.load_state_dict(checkpoint['my_classifier'])
 model.eval()
 
 def load_img(path):
