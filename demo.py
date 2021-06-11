@@ -14,7 +14,7 @@ import numpy
 
 import tensorflow as tf
 import torch
-from model import EfficientNet
+from model import EfficientNetB0
 import gradio as gr
 import tensorflow_hub as hub
 
@@ -31,8 +31,8 @@ from PIL import ImageFont
 from PIL import ImageOps
 
 
-model = EfficientNet()
-model.load_state_dict(torch.load("/latest.pt"))
+model = EfficientNetB0()
+model.load_state_dict(torch.load("latest.pt"))
 model.eval()
 
 def load_img(path):
