@@ -90,10 +90,10 @@ module_handle = "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_re
 detector = hub.load(module_handle).signatures['default']
 
 inputs = [
-  gr.inputs.Image(image1, type='file', label="Image1"),
-  gr.inputs.Image(image2, type='file', label="Image2"),
-  gr.inputs.Image(image3, type='file', label="Image3"),
-  gr.inputs.Image(image4, type='file', label="Image4")
+  gr.inputs.Image(type='file', label="Image1"),
+  gr.inputs.Image(type='file', label="Image2"),
+  gr.inputs.Image(type='file', label="Image3"),
+  gr.inputs.Image(type='file', label="Image4")
   #gr.inputs.CheckBox(lines=1, label="optional catego")
 ]
 
