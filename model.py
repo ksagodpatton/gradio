@@ -30,70 +30,70 @@ from torchvision import transforms
 # !pip install -U tensorboardcolab
 # from tensorboardcolab import TensorBoardColab
 
-torch.manual_seed(470)
-torch.cuda.manual_seed(470)
+# torch.manual_seed(470)
+# torch.cuda.manual_seed(470)
 
-# training & optimization hyper-parameters
-max_epoch = 70
-learning_rate = 0.001
-batch_size = 64
-device = 'cuda'
+# # training & optimization hyper-parameters
+# max_epoch = 70
+# learning_rate = 0.001
+# batch_size = 64
+# device = 'cuda'
 
-# model hyper-parameters
-output_dim = 16
+# # model hyper-parameters
+# output_dim = 16
 
-# Boolean value to select training process
-training_process = True
+# # Boolean value to select training process
+# training_process = True
 
-# ######### split into test and train folder ############
-# 1번 했으니 안해도 됨
-
-
+# # ######### split into test and train folder ############
+# # 1번 했으니 안해도 됨
 
 
-# import random
-# #brands = ['1_Hermes']
-# #'1_Hermes', '2_SaintLaurent', '4_Lemaire', '5_CommeDesGarcons', '6_OffWhite', '8_Dior', '9_Gucci', '10_Burberry', '11_Prada', '13_ThomBrowne', '14_A.P.C', 
-# brands = ['1_Hermes', '2_SaintLaurent', '4_Lemaire', '5_CommeDesGarcons', '6_OffWhite', '8_Dior', '9_Gucci', '10_Burberry', '11_Prada', '13_ThomBrowne', '14_A.P.C', '15_AlexanderMcqueen', '16_Balenciaga', '17_Chanel', '18_LouisVuitton', '19_MiuMiu']
-# for brand in brands:
-#     image_folder = "/gdrive/My Drive/ee474_dataset/0_Dataset/" + brand
-#     train_folder = "/gdrive/My Drive/ee474_dataset/0_Dataset/train/" + brand
-#     test_folder = "/gdrive/My Drive/ee474_dataset/0_Dataset/test/" + brand
-#     if not os.path.exists(train_folder):
-#         os.makedirs(train_folder)
-#     if not os.path.exists(test_folder):
-#         os.makedirs(test_folder)
-#     image_files = [_ for _ in os.listdir(image_folder) if _.endswith('jpg')]
-#     random.shuffle(image_files)
-#     for image in image_files[:int(len(image_files)*0.8)]:
-#         image_path = os.path.join(image_folder, image)
-#         newpath = image_path.replace(brand, 'train/' + brand)
-#         shutil.move(image_path, newpath)
-#     for image in image_files[int(len(image_files)*0.8):]:
-#         image_path = os.path.join(image_folder, image)
-#         newpath = image_path.replace(brand, 'test/' + brand)
-#         shutil.move(image_path, newpath)
 
-########## dataload ###########
 
-data_dir = "/gdrive/My Drive/ee474_dataset/0_Dataset/"
+# # import random
+# # #brands = ['1_Hermes']
+# # #'1_Hermes', '2_SaintLaurent', '4_Lemaire', '5_CommeDesGarcons', '6_OffWhite', '8_Dior', '9_Gucci', '10_Burberry', '11_Prada', '13_ThomBrowne', '14_A.P.C', 
+# # brands = ['1_Hermes', '2_SaintLaurent', '4_Lemaire', '5_CommeDesGarcons', '6_OffWhite', '8_Dior', '9_Gucci', '10_Burberry', '11_Prada', '13_ThomBrowne', '14_A.P.C', '15_AlexanderMcqueen', '16_Balenciaga', '17_Chanel', '18_LouisVuitton', '19_MiuMiu']
+# # for brand in brands:
+# #     image_folder = "/gdrive/My Drive/ee474_dataset/0_Dataset/" + brand
+# #     train_folder = "/gdrive/My Drive/ee474_dataset/0_Dataset/train/" + brand
+# #     test_folder = "/gdrive/My Drive/ee474_dataset/0_Dataset/test/" + brand
+# #     if not os.path.exists(train_folder):
+# #         os.makedirs(train_folder)
+# #     if not os.path.exists(test_folder):
+# #         os.makedirs(test_folder)
+# #     image_files = [_ for _ in os.listdir(image_folder) if _.endswith('jpg')]
+# #     random.shuffle(image_files)
+# #     for image in image_files[:int(len(image_files)*0.8)]:
+# #         image_path = os.path.join(image_folder, image)
+# #         newpath = image_path.replace(brand, 'train/' + brand)
+# #         shutil.move(image_path, newpath)
+# #     for image in image_files[int(len(image_files)*0.8):]:
+# #         image_path = os.path.join(image_folder, image)
+# #         newpath = image_path.replace(brand, 'test/' + brand)
+# #         shutil.move(image_path, newpath)
 
-transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.480, 0.437, 0.425), (0.257, 0.247, 0.245))])
+# ########## dataload ###########
 
-train_dir = data_dir + 'train'
-test_dir = data_dir + 'test'
+# data_dir = "/gdrive/My Drive/ee474_dataset/0_Dataset/"
 
-train_data = torchvision.datasets.ImageFolder(root=train_dir, transform=transform)
-test_data = torchvision.datasets.ImageFolder(root=test_dir, transform=transform)
+# transform = transforms.Compose(
+#     [transforms.ToTensor(),
+#      transforms.Normalize((0.480, 0.437, 0.425), (0.257, 0.247, 0.245))])
 
-train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=2)
-test_dataloader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=2)
+# train_dir = data_dir + 'train'
+# test_dir = data_dir + 'test'
 
-print(train_data.class_to_idx)
+# train_data = torchvision.datasets.ImageFolder(root=train_dir, transform=transform)
+# test_data = torchvision.datasets.ImageFolder(root=test_dir, transform=transform)
 
-classes = ('Burberry', 'Prada', 'Thom Browne', 'A.P.C', 'Alexander Mcqueen', 'Balenciaga', 'Chanel', 'Louis Vuitton', 'Miu Miu', 'Hermes', 'Saint Laurent', 'Lemaire', 'Comme Des Garcons', 'Off White', 'Dior', 'Gucci')
+# train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=2)
+# test_dataloader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=2)
+
+# print(train_data.class_to_idx)
+
+# classes = ('Burberry', 'Prada', 'Thom Browne', 'A.P.C', 'Alexander Mcqueen', 'Balenciaga', 'Chanel', 'Louis Vuitton', 'Miu Miu', 'Hermes', 'Saint Laurent', 'Lemaire', 'Comme Des Garcons', 'Off White', 'Dior', 'Gucci')
 
 # data_dir = os.path.join(gdrive_root, 'my_data')
 
@@ -397,248 +397,248 @@ def EfficientNetB0():
     }
     return EfficientNet(cfg)
 
-my_classifier = EfficientNetB0()
-my_classifier = my_classifier.to(device)
+# my_classifier = EfficientNetB0()
+# my_classifier = my_classifier.to(device)
 
-# Print your neural network structure
-print(my_classifier)
+# # Print your neural network structure
+# print(my_classifier)
 
-optimizer = optim.Adam(my_classifier.parameters(), lr=learning_rate)
+# optimizer = optim.Adam(my_classifier.parameters(), lr=learning_rate)
 
-ckpt_dir = os.path.join(gdrive_root, 'checkpoints')
-ckpt_dir=os.path.join(ckpt_dir, 'new_efficientnet_1')
-if not os.path.exists(ckpt_dir):
-  os.makedirs(ckpt_dir)
+# ckpt_dir = os.path.join(gdrive_root, 'checkpoints')
+# ckpt_dir=os.path.join(ckpt_dir, 'new_efficientnet_1')
+# if not os.path.exists(ckpt_dir):
+#   os.makedirs(ckpt_dir)
   
-best_acc = 0.
-ckpt_path = os.path.join(ckpt_dir, 'lastest.pt')
-if os.path.exists(ckpt_path):
-  ckpt = torch.load(ckpt_path)
-  try:
-    my_classifier.load_state_dict(ckpt['my_classifier'])
-    optimizer.load_state_dict(ckpt['optimizer'])
-    best_acc = ckpt['best_acc']
-  except RuntimeError as e:
-      print('wrong checkpoint')
-  else:    
-    print('checkpoint is loaded !')
-    print('current best accuracy : %.2f' % best_acc)
+# best_acc = 0.
+# ckpt_path = os.path.join(ckpt_dir, 'lastest.pt')
+# if os.path.exists(ckpt_path):
+#   ckpt = torch.load(ckpt_path)
+#   try:
+#     my_classifier.load_state_dict(ckpt['my_classifier'])
+#     optimizer.load_state_dict(ckpt['optimizer'])
+#     best_acc = ckpt['best_acc']
+#   except RuntimeError as e:
+#       print('wrong checkpoint')
+#   else:    
+#     print('checkpoint is loaded !')
+#     print('current best accuracy : %.2f' % best_acc)
 
-from pathlib import Path
-# Basic settings
-name='main'
-ckpt_dir='ckpts'
-ckpt_reload='10'
-gpu=True
-log_dir='logs'
-log_iter = 100
+# from pathlib import Path
+# # Basic settings
+# name='main'
+# ckpt_dir='ckpts'
+# ckpt_reload='10'
+# gpu=True
+# log_dir='logs'
+# log_iter = 100
 
-result_dir = Path(gdrive_root) / 'new_efficientnet_1' / name
-ckpt_dir = result_dir / ckpt_dir
-ckpt_dir.mkdir(parents=True, exist_ok=True)
-log_dir = result_dir / log_dir
-log_dir.mkdir(parents=True, exist_ok=True)
+# result_dir = Path(gdrive_root) / 'new_efficientnet_1' / name
+# ckpt_dir = result_dir / ckpt_dir
+# ckpt_dir.mkdir(parents=True, exist_ok=True)
+# log_dir = result_dir / log_dir
+# log_dir.mkdir(parents=True, exist_ok=True)
 
-device = 'cuda' if torch.cuda.is_available() and gpu else 'cpu'
+# device = 'cuda' if torch.cuda.is_available() and gpu else 'cpu'
 
-# Setup tensorboard.
+# # Setup tensorboard.
+# # from torch.utils.tensorboard import SummaryWriter 
+# # writer = SummaryWriter(log_dir)
+# # %load_ext tensorboard
+# # %tensorboard --logdir '/gdrive/My Drive/'{str(log_dir).replace('/gdrive/My Drive/', '')}
+
 # from torch.utils.tensorboard import SummaryWriter 
 # writer = SummaryWriter(log_dir)
-# %load_ext tensorboard
-# %tensorboard --logdir '/gdrive/My Drive/'{str(log_dir).replace('/gdrive/My Drive/', '')}
 
-from torch.utils.tensorboard import SummaryWriter 
-writer = SummaryWriter(log_dir)
+# if training_process:
+#   it = 0
+#   train_losses = []
+#   test_losses = []
+#   train_accs = []
+#   test_accs = []
+#   for epoch in range(max_epoch):
+#     # train phase
+#     my_classifier.train()
+#     for inputs, labels in train_dataloader:
+#       it += 1
 
-if training_process:
-  it = 0
-  train_losses = []
-  test_losses = []
-  train_accs = []
-  test_accs = []
-  for epoch in range(max_epoch):
-    # train phase
-    my_classifier.train()
-    for inputs, labels in train_dataloader:
-      it += 1
-
-      # load data to the GPU.
-      #P8.1. Send 'inputs' and 'labels' to either cpu or gpu using 'device' variable
-      inputs = inputs.to(device)
-      labels = labels.to(device)
+#       # load data to the GPU.
+#       #P8.1. Send 'inputs' and 'labels' to either cpu or gpu using 'device' variable
+#       inputs = inputs.to(device)
+#       labels = labels.to(device)
 
 
-      # feed data into the network and get outputs.
-      # P8.2. Feed `inputs` into the network, get an output, and keep it in a variable called `logit`. 
-      logits = my_classifier(inputs)
+#       # feed data into the network and get outputs.
+#       # P8.2. Feed `inputs` into the network, get an output, and keep it in a variable called `logit`. 
+#       logits = my_classifier(inputs)
 
 
-      # calculate loss
-      # Note: `F.cross_entropy` function receives logits, or pre-softmax outputs, rather than final probability scores.
-      # P8.3. Compute loss using `logit` and `labels`, and keep it in a variable called `loss` 
-      loss =  F.cross_entropy(logits, labels)
+#       # calculate loss
+#       # Note: `F.cross_entropy` function receives logits, or pre-softmax outputs, rather than final probability scores.
+#       # P8.3. Compute loss using `logit` and `labels`, and keep it in a variable called `loss` 
+#       loss =  F.cross_entropy(logits, labels)
 
 
-      # Note: You should flush out gradients computed at the previous step before computing gradients at the current step. 
-      #       Otherwise, gradients will accumulate.
-      # P8.4. flush out the previously computed gradient 
-      optimizer.zero_grad()
+#       # Note: You should flush out gradients computed at the previous step before computing gradients at the current step. 
+#       #       Otherwise, gradients will accumulate.
+#       # P8.4. flush out the previously computed gradient 
+#       optimizer.zero_grad()
 
 
-      # backprogate loss.
-      # P8.5. backward the computed loss. 
-      loss.backward()
+#       # backprogate loss.
+#       # P8.5. backward the computed loss. 
+#       loss.backward()
 
 
-      # P8.6. update the network weights. 
-      optimizer.step()
+#       # P8.6. update the network weights. 
+#       optimizer.step()
 
 
-      # calculate accuracy.
-      acc = (logits.argmax(dim=1) == labels).float().mean()
+#       # calculate accuracy.
+#       acc = (logits.argmax(dim=1) == labels).float().mean()
 
-      if it % 2000 == 0 and writer is not None:
-          # P8.7. Log `loss` with a tag name 'train_loss' using `writer`. Use `global_step` as a timestamp for the log. 
-          # writer.writer_your_code_here (one-liner).
-          writer.add_scalar('train_loss', loss, global_step=epoch)
+#       if it % 2000 == 0 and writer is not None:
+#           # P8.7. Log `loss` with a tag name 'train_loss' using `writer`. Use `global_step` as a timestamp for the log. 
+#           # writer.writer_your_code_here (one-liner).
+#           writer.add_scalar('train_loss', loss, global_step=epoch)
 
-          # P8.8. Log `accuracy` with a tag name 'train_accuracy' using `writer`. Use `global_step` as a timestamp for the log. 
-          # writer.writer_your_code_here (one-liner).
-          writer.add_scalar('train_accuracy', acc, global_step=epoch)
+#           # P8.8. Log `accuracy` with a tag name 'train_accuracy' using `writer`. Use `global_step` as a timestamp for the log. 
+#           # writer.writer_your_code_here (one-liner).
+#           writer.add_scalar('train_accuracy', acc, global_step=epoch)
 
-          print('[epoch:{}, iteration:{}] train loss : {:.4f} train accuracy : {:.4f}'.format(epoch+1, it, loss.item(), acc.item()))
+#           print('[epoch:{}, iteration:{}] train loss : {:.4f} train accuracy : {:.4f}'.format(epoch+1, it, loss.item(), acc.item()))
 
-    # save losses in a list so that we can visualize them later.
-    train_losses.append(loss)  
-    train_accs.append(acc)
-
-
-    # test phase
-    n = 0.
-    test_loss = 0.
-    test_acc = 0.
-
-    my_classifier.eval()
-    for test_inputs, test_labels in test_dataloader:
-      #P8.9. Send 'inputs' and 'labels' to either cpu or gpu using 'device' variable
-      #test_inputs = write your code here (one-liner).
-      #test_labels = write your code here (one-liner).
-      test_inputs = test_inputs.to(device)
-      test_labels = test_labels.to(device)
+#     # save losses in a list so that we can visualize them later.
+#     train_losses.append(loss)  
+#     train_accs.append(acc)
 
 
-      # P8.10. Feed `inputs` into the network, get an output, and keep it in a variable called `logit`. 
-      # logits = write your code here (one-liner).
-      logits = my_classifier(test_inputs)
+#     # test phase
+#     n = 0.
+#     test_loss = 0.
+#     test_acc = 0.
+
+#     my_classifier.eval()
+#     for test_inputs, test_labels in test_dataloader:
+#       #P8.9. Send 'inputs' and 'labels' to either cpu or gpu using 'device' variable
+#       #test_inputs = write your code here (one-liner).
+#       #test_labels = write your code here (one-liner).
+#       test_inputs = test_inputs.to(device)
+#       test_labels = test_labels.to(device)
 
 
-      # Yes, for your convenience.
-      test_loss += F.cross_entropy(logits, test_labels, reduction='sum').item()
-      test_acc += (logits.argmax(dim=1) == test_labels).float().sum().item()
-      n += test_inputs.size(0)
-
-    test_loss /= n
-    test_acc /= n
-    test_losses.append(test_loss)
-    test_accs.append(test_acc)
+#       # P8.10. Feed `inputs` into the network, get an output, and keep it in a variable called `logit`. 
+#       # logits = write your code here (one-liner).
+#       logits = my_classifier(test_inputs)
 
 
-    # P8.11. Log `test_loss` with a tag name 'test_loss' using `writer`. Use `global_step` as a timestamp for the log.
-    # writer.write_your_code_here (one-liner).
-    writer.add_scalar('test_loss', test_loss, global_step=epoch)
+#       # Yes, for your convenience.
+#       test_loss += F.cross_entropy(logits, test_labels, reduction='sum').item()
+#       test_acc += (logits.argmax(dim=1) == test_labels).float().sum().item()
+#       n += test_inputs.size(0)
+
+#     test_loss /= n
+#     test_acc /= n
+#     test_losses.append(test_loss)
+#     test_accs.append(test_acc)
 
 
-    # P8.12. Log `test_accuracy` with a tag name 'test_accuracy' using `writer`. Use `global_step` as a timestamp for the log.
-    # writer.write_your_code_here (one-liner).
-    writer.add_scalar('test_accuracy', test_acc, global_step=epoch)
+#     # P8.11. Log `test_loss` with a tag name 'test_loss' using `writer`. Use `global_step` as a timestamp for the log.
+#     # writer.write_your_code_here (one-liner).
+#     writer.add_scalar('test_loss', test_loss, global_step=epoch)
 
 
-    print('[epoch:{}, iteration:{}] test_loss : {:.4f} test accuracy : {:.4f}'.format(epoch+1, it, test_loss, test_acc)) 
-
-    writer.flush()
-    # save checkpoint whenever there is some improvement in performance
-    if test_acc > best_acc:
-      best_acc = test_acc
-      # Save records.
-      ckpt = {'my_classifier':my_classifier.state_dict(),
-              'optimizer':optimizer.state_dict(),
-              'best_acc':best_acc}
-      torch.save(ckpt, ckpt_path)
-
-import matplotlib.pyplot as plt
-
-plt.plot(train_losses, label='train loss')
-plt.plot(test_losses, label='test loss')
-plt.legend()
-
-if not training_process:
-  # Re-load trained model
-  my_classifier.load_state_dict(ckpt['my_classifier'])
-  optimizer.load_state_dict(ckpt['optimizer'])
-
-  # Testing
-  n = 0.
-  test_loss = 0.
-  test_acc = 0.
-  my_classifier.eval()
-  for test_inputs, test_labels in test_dataloader:
-    test_inputs = test_inputs.to(device)
-    test_labels = test_labels.to(device)
-
-    logits = my_classifier(test_inputs)
-    test_loss += F.cross_entropy(logits, test_labels, reduction='sum').item()
-    test_acc += (logits.argmax(dim=1) == test_labels).float().sum().item()
-    n += test_inputs.size(0)
-
-  test_loss /= n
-  test_acc /= n
-  print('Test_loss : {:.4f}, Test accuracy : {:.4f}'.format(test_loss, test_acc))
-
-plt.plot(train_accs, label='train acc')
-plt.plot(test_accs, label='test acc')
-plt.legend()
-
-import random
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-my_classifier.eval()
-
-num_test_samples = len(test_data)
-random_idx = random.randint(0, num_test_samples)
-
-test_input, test_label = test_data.__getitem__(random_idx)
-test_prediction = F.softmax(my_classifier(test_input.unsqueeze(0).to(device)), dim=1).argmax().item()
-print('label : %s' % classes[test_label])
-print('prediction : %s' % classes[test_prediction])
-
-# functions to show an image
-def imshow(img):
-    img = img / 2 + 0.5     # unnormalize
-    npimg = img.numpy()
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
-
-# show images
-imshow(torchvision.utils.make_grid(test_input))
-
-class_correct = list(0. for i in range(output_dim))
-class_total = list(0. for i in range(output_dim))
-my_classifier.eval()
-with torch.no_grad():
-    for data in test_dataloader:
-        images, labels = data
-        inputs = images.to(device)
-        labels = labels.to(device)
-        outputs = my_classifier(inputs)
-        _, predicted = torch.max(outputs, 1)
-        c = (predicted == labels).squeeze()
-        for i in range(list(labels.size())[0]):
-            label = labels[i]
-            if c[i]: class_correct[label] += 1
-            class_total[label] += 1
+#     # P8.12. Log `test_accuracy` with a tag name 'test_accuracy' using `writer`. Use `global_step` as a timestamp for the log.
+#     # writer.write_your_code_here (one-liner).
+#     writer.add_scalar('test_accuracy', test_acc, global_step=epoch)
 
 
-for i in range(output_dim):
-    print('Accuracy of %5s : %2d %%' % (
-        classes[i], 100 * class_correct[i] / class_total[i]))
+#     print('[epoch:{}, iteration:{}] test_loss : {:.4f} test accuracy : {:.4f}'.format(epoch+1, it, test_loss, test_acc)) 
+
+#     writer.flush()
+#     # save checkpoint whenever there is some improvement in performance
+#     if test_acc > best_acc:
+#       best_acc = test_acc
+#       # Save records.
+#       ckpt = {'my_classifier':my_classifier.state_dict(),
+#               'optimizer':optimizer.state_dict(),
+#               'best_acc':best_acc}
+#       torch.save(ckpt, ckpt_path)
+
+# import matplotlib.pyplot as plt
+
+# plt.plot(train_losses, label='train loss')
+# plt.plot(test_losses, label='test loss')
+# plt.legend()
+
+# if not training_process:
+#   # Re-load trained model
+#   my_classifier.load_state_dict(ckpt['my_classifier'])
+#   optimizer.load_state_dict(ckpt['optimizer'])
+
+#   # Testing
+#   n = 0.
+#   test_loss = 0.
+#   test_acc = 0.
+#   my_classifier.eval()
+#   for test_inputs, test_labels in test_dataloader:
+#     test_inputs = test_inputs.to(device)
+#     test_labels = test_labels.to(device)
+
+#     logits = my_classifier(test_inputs)
+#     test_loss += F.cross_entropy(logits, test_labels, reduction='sum').item()
+#     test_acc += (logits.argmax(dim=1) == test_labels).float().sum().item()
+#     n += test_inputs.size(0)
+
+#   test_loss /= n
+#   test_acc /= n
+#   print('Test_loss : {:.4f}, Test accuracy : {:.4f}'.format(test_loss, test_acc))
+
+# plt.plot(train_accs, label='train acc')
+# plt.plot(test_accs, label='test acc')
+# plt.legend()
+
+# import random
+
+# import matplotlib.pyplot as plt
+# import numpy as np
+
+# my_classifier.eval()
+
+# num_test_samples = len(test_data)
+# random_idx = random.randint(0, num_test_samples)
+
+# test_input, test_label = test_data.__getitem__(random_idx)
+# test_prediction = F.softmax(my_classifier(test_input.unsqueeze(0).to(device)), dim=1).argmax().item()
+# print('label : %s' % classes[test_label])
+# print('prediction : %s' % classes[test_prediction])
+
+# # functions to show an image
+# def imshow(img):
+#     img = img / 2 + 0.5     # unnormalize
+#     npimg = img.numpy()
+#     plt.imshow(np.transpose(npimg, (1, 2, 0)))
+
+# # show images
+# imshow(torchvision.utils.make_grid(test_input))
+
+# class_correct = list(0. for i in range(output_dim))
+# class_total = list(0. for i in range(output_dim))
+# my_classifier.eval()
+# with torch.no_grad():
+#     for data in test_dataloader:
+#         images, labels = data
+#         inputs = images.to(device)
+#         labels = labels.to(device)
+#         outputs = my_classifier(inputs)
+#         _, predicted = torch.max(outputs, 1)
+#         c = (predicted == labels).squeeze()
+#         for i in range(list(labels.size())[0]):
+#             label = labels[i]
+#             if c[i]: class_correct[label] += 1
+#             class_total[label] += 1
+
+
+# for i in range(output_dim):
+#     print('Accuracy of %5s : %2d %%' % (
+#         classes[i], 100 * class_correct[i] / class_total[i]))
