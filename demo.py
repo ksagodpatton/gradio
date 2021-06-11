@@ -89,8 +89,8 @@ detector = hub.load(module_handle).signatures['default']
 
 inputs = [
   gr.inputs.Image(image1, type='file', label="Image1"),
-  gr.inputs.Image(image2, type='file', label="Image2")
-  gr.inputs.Image(image3, type='file', label="Image3")
+  gr.inputs.Image(image2, type='file', label="Image2"),
+  gr.inputs.Image(image3, type='file', label="Image3"),
   gr.inputs.Image(image4, type='file', label="Image4")
   #gr.inputs.CheckBox(lines=1, label="optional catego")
 ]
@@ -158,8 +158,8 @@ def processing(image1, image2, image3, image4):
   return to_pil_image(load_image(img[idx])), brands[idx], introductions[idx]
 
   outputs = [
-             gr.outputs.Image()
-             gr.outputs.Textbox()
+             gr.outputs.Image(),
+             gr.outputs.Textbox(),
              gr.outputs.Textbox()
   ]
 
