@@ -32,7 +32,7 @@ from PIL import ImageOps
 
 
 model = EfficientNetB0()
-model.load_state_dict(torch.load("/latest.pt"))
+model.load_state_dict(torch.load("lastest.pt"))
 model.eval()
 
 def load_img(path):
@@ -120,10 +120,10 @@ introductions = ('Your brand identity is "Burberry"!\nYou have a warm, brownish 
 'Your brand identity is "Dior"!\nYou have a refined luxury that no one can easily follow.\nFully elegant, but with unique individuality points, you look luxurious!',
 'Your brand identity is "Gucci"!\nYou strongly show your personality with splendor.\nBut with luxurious patterns, your personality looks more elegant.\nYou, the owner of unique fashion, are a true fashionista!')
 
-img=('/brand_images/Burberry.jpg', '/brand_images/Prada.jpg', '/brand_images/ThomBrowne.jpg','/brand_images/APC.jpg',
-     '/brand_images/AlexanderMcqueen.jpg','/brand_images/Balenciaga.jpg','/brand_images/Chanel.jpg','/brand_images/LouisVuitton.jpg',
-     '/brand_images/MiuMiu.jpg','/brand_images/Hermes.jpg','/brand_images/SaintLaurent.jpg','/brand_images/LeMaire.jpg', '/brand_images/CommeDesGarcons.jpg',
-     '/brand_images/OffWhite.jpg''/brand_images/Dior.jpg','/brand_images/Gucci.jpg')
+img=('brand_images/Burberry.jpg', 'brand_images/Prada.jpg', 'brand_images/ThomBrowne.jpg','brand_images/APC.jpg',
+     'brand_images/AlexanderMcqueen.jpg','brand_images/Balenciaga.jpg','brand_images/Chanel.jpg','brand_images/LouisVuitton.jpg',
+     'brand_images/MiuMiu.jpg','brand_images/Hermes.jpg','brand_images/SaintLaurent.jpg','brand_images/LeMaire.jpg', 'brand_images/CommeDesGarcons.jpg',
+     'brand_images/OffWhite.jpg''brand_images/Dior.jpg','brand_images/Gucci.jpg')
 
 def processing(image1, image2, image3, image4):
   image_list=[]
@@ -166,8 +166,8 @@ title = "Find my style, find my brand"
 description = "Nowadays, fashion represents one's identity. Which brand has the same fashion identity with you?\nFind your brand by simply uploading your daily fashion styles!"
 
 examples = [
-    ["/example_images/examplepicture1.jpg"],
-    ["/example_images/examplepicture2.jpg"]
+    ["example_images/examplepicture1.jpg"],
+    ["example_images/examplepicture2.jpg"]
 ]
 
 gr.Interface(processing, inputs, outputs, title=title, description=description, example=examples).launch(debug=True)
