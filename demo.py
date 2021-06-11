@@ -9,18 +9,20 @@ Original file is located at
 
 # pip install gradio
 
+import os
+import numpy
+
 import tensorflow as tf
 import torch
 from model import EfficientNet
 import gradio as gr
+import tensorflow_hub as hub
 
 import torchvision
 from torchvision import transforms
 
 from torchvision.transforms.functional import to_tensor, to_pil_image
 
-import os
-import numpy
 
 from PIL import Image
 from PIL import ImageColor
@@ -169,4 +171,4 @@ examples = [
     ["example_images/examplepicture2.jpg"]
 ]
 
-gr.Interface(classify, inputs, outputs, title=title, description=description).launch(debug=True)
+gr.Interface(model, inputs, outputs, title=title, description=description, example=examples).launch(debug=True)
