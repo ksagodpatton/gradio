@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1SoFL9hM12G1dqx7HfNySdlI1rk35rih2
 """
 
-pip install gradio
+# pip install gradio
 
 import tensorflow as tf
 import torch
@@ -30,7 +30,7 @@ from PIL import ImageOps
 
 
 model = EfficientNet()
-model.load_state_dict(torch.load("latest.pt"))
+model.load_state_dict(torch.load("/latest.pt"))
 model.eval()
 
 def load_img(path):
