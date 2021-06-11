@@ -103,8 +103,7 @@ def imagesave(image):
 
 brands = ('Burberry', 'Prada', 'Thom Browne', 'A.P.C', 'Alexander Mcqueen', 'Balenciaga', 'Chanel', 
            'Louis Vuitton', 'Miu Miu', 'Hermes', 'Saint Laurent', 'Lemaire', 'Comme Des Garcons', 'Off White', 'Dior', 'Gucci')
-introductions =
-('Your brand identity is "Burberry"!\nYou have a warm, brownish feeling as if in autumn of nice weather.\nOf a style that can look simple, luxurious check adds elegance.',
+introductions = ('Your brand identity is "Burberry"!\nYou have a warm, brownish feeling as if in autumn of nice weather.\nOf a style that can look simple, luxurious check adds elegance.',
 'Your brand identity is "Prada"!\nYou give a neat feeling with a neat fit.\nEven with not bland color, your neat luxury gives credibility!',
 'Your brand identity is "Thom Browne"!\nI guess you prefer gray achromatic colors and its suits!\nYour very neat style gives the feeling of an office worker who does work very well.',
 'Your brand identity is “A.P.C."!\nNormality sometimes looks the prettiest and the coolest.\nYour casual style may give a friendly feeling to anybody!',
