@@ -55,12 +55,12 @@ def run_detector(detector, downloaded_image_list):
 
 def save_crop_images(downloaded_result_list, image_path):
   for i in range(len(downloaded_result_list)):
-    res = detection_result_list[i]
+    res = downloaded_result_list[i]
     boxes = res["detection_boxes"]
     class_names = res["detection_class_entities"]
     scores = res["detection_scores"]
     max_area = 0
-    img = Image.open(downloaded_image_list[i])
+    img = Image.open(image_path[i])
     im_width, im_height = img.size
     for j in range(min(boxes.shape[0], 10)):
       if scores[j] >= 0.1:
@@ -140,7 +140,7 @@ def processing(image1, image2, image3, image4):
      transforms.Normalize((0.480, 0.437, 0.425), (0.257, 0.247, 0.245))])
   
   for image in image_list:
-    cropped_images.append(to_pil_image(load_img(image_list[i])))
+    cropped_images.append(to_pil_image(load_img(image)))
     
 
   for cropped_image in cropped_images:
