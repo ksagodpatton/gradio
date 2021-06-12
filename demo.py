@@ -42,6 +42,11 @@ def load_img(path):
   img = tf.image.decode_jpeg(img, channels=3)
   return img
 
+
+module_handle = "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_resnet_v2/1" #@param ["https://tfhub.dev/google/openimages_v4/ssd/mobilenet_v2/1", "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_resnet_v2/1", "https://tfhub.dev/tensorflow/mask_rcnn/inception_resnet_v2_1024x1024/1"]
+
+detector = hub.load(module_handle).signatures['default']
+
 def run_detector(detector, downloaded_image_list):
   img_list = downloaded_image_list
   result_list=[]
@@ -56,8 +61,9 @@ def run_detector(detector, downloaded_image_list):
   return result_list
 
 def save_crop_images(detection_result_list, image_path):
+  ymin_r, xmin_r, ymax_r, xmax_r = 0, 0, 1, 1
   for i in range(len(detection_result_list)):
-    res = downloaded_result_list[i]
+    res = detection_result_list[i]
     boxes = res["detection_boxes"]
     class_names = res["detection_class_entities"]
     scores = res["detection_scores"]
@@ -73,7 +79,7 @@ def save_crop_images(detection_result_list, image_path):
           if (area > max_area):
             ymin_r, xmin_r, ymax_r, xmax_r = ymin, xmin, ymax, xmax
             max_area = area
-    #display_image(img)
+
     cropped_img = img.crop((xmin_r, ymin_r, xmax_r, ymax_r))
     resized = ImageOps.fit(cropped_img, (128, 384), Image.ANTIALIAS)
     # newfp = downloaded_image_list[i].replace('jpeg_files', 'cropped_files') #####
@@ -82,26 +88,17 @@ def save_crop_images(detection_result_list, image_path):
     # foldername = '/'.join(fplist)
     # if not os.path.exists(foldername):
       # os.makedirs(foldername)
-    resized.save(image_path[i], format="JPEG")
+    resized.save(image_path[i], format="JPEG", quality=90)
     #display_image(resized)
-
-module_handle = "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_resnet_v2/1" #@param ["https://tfhub.dev/google/openimages_v4/ssd/mobilenet_v2/1", "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_resnet_v2/1", "https://tfhub.dev/tensorflow/mask_rcnn/inception_resnet_v2_1024x1024/1"]
-
-detector = hub.load(module_handle).signatures['default']
+x
 
 inputs = [
   gr.inputs.Image(type="pil", label="Image1"),
-  gr.inputs.Image(type='file', label="Image2"),
-  gr.inputs.Image(type='file', label="Image3"),
-  gr.inputs.Image(type='file', label="Image4")
+  gr.inputs.Image(type='pil', label="Image2"),
+  gr.inputs.Image(type='pil', label="Image3"),
+  gr.inputs.Image(type='pil', label="Image4")
   #gr.inputs.CheckBox(lines=1, label="optional catego")
 ]
-
-def imagesave(image):
-  act=Image.open(image.name)
-  act.save(image.name, format="JPEG", quality=90)
-  act.close()
-  return image.name
 
 brands = ('Burberry', 'Prada', 'Thom Browne', 'A.P.C', 'Alexander Mcqueen', 'Balenciaga', 'Chanel', 
            'Louis Vuitton', 'Miu Miu', 'Hermes', 'Saint Laurent', 'Lemaire', 'Comme Des Garcons', 'Off White', 'Dior', 'Gucci')
@@ -139,29 +136,29 @@ def processing(image1, image2, image3, image4):
         os.makedirs(filename1)
     image1.save(filename1, format="JPEG", quality=90)
         
-    filname_list.append(filename1)
+    filename_list.append(filename1)
     
     if not os.path.exists(filename2):
         os.makedirs(filename2)
-    image1.save(filename2, format="JPEG", quality=90)
+    image2.save(filename2, format="JPEG", quality=90)
         
-    filname_list.append(filename2)
+    filename_list.append(filename2)
     
     if not os.path.exists(filename3):
         os.makedirs(filename3)
-    image1.save(filename3, format="JPEG", quality=90)
+    image3.save(filename3, format="JPEG", quality=90)
         
-    filname_list.append(filename3)
+    filename_list.append(filename3)
     
     if not os.path.exists(filename4):
         os.makedirs(filename4)
-    image1.save(filename4, format="JPEG", quality=90)
+    image4.save(filename4, format="JPEG", quality=90)
         
-    filname_list.append(filename4)
+    filename_list.append(filename4)
 
 
-  result_list=run_detector(detector, image_list)
-  save_crop_images(result_list, image_list)
+  result_list=run_detector(detector, filename_list)
+  save_crop_images(result_list, filename_list)
   cropped_images=[]
   test_transforms = transforms.Compose([transforms.ToTensor(),
      transforms.Normalize((0.480, 0.437, 0.425), (0.257, 0.247, 0.245))])
