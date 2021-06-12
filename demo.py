@@ -133,12 +133,32 @@ filename3='imageinput/image3'
 filename4='imageinput/image4'
 
 def processing(image1, image2, image3, image4):
-    if not os.path.exists(filename):
-        os.makedirs(filename)
-    image1.save(filename, format="JPEG")
-    image2.save(filename, format="JPEG")
-    image3.save(filename, format="JPEG")
-    image4.save(filename, format="JPEG")
+    filename_list=[]
+    
+    if not os.path.exists(filename1):
+        os.makedirs(filename1)
+    image1.save(filename1, format="JPEG", quality=90)
+        
+    filname_list.append(filename1)
+    
+    if not os.path.exists(filename2):
+        os.makedirs(filename2)
+    image1.save(filename2, format="JPEG", quality=90)
+        
+    filname_list.append(filename2)
+    
+    if not os.path.exists(filename3):
+        os.makedirs(filename3)
+    image1.save(filename3, format="JPEG", quality=90)
+        
+    filname_list.append(filename3)
+    
+    if not os.path.exists(filename4):
+        os.makedirs(filename4)
+    image1.save(filename4, format="JPEG", quality=90)
+        
+    filname_list.append(filename4)
+
 
   result_list=run_detector(detector, image_list)
   save_crop_images(result_list, image_list)
