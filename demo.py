@@ -62,7 +62,7 @@ def save_crop_images(downloaded_result_list, image_path):
     class_names = res["detection_class_entities"]
     scores = res["detection_scores"]
     max_area = 0
-    img = Image.open(image_path[i])
+    img = load_image(image_path[i])
     im_width, im_height = img.size
     for j in range(min(boxes.shape[0], 10)):
       if scores[j] >= 0.1:
