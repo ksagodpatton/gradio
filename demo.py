@@ -55,14 +55,14 @@ def run_detector(detector, downloaded_image_list):
 
   return result_list
 
-def save_crop_images(downloaded_result_list, image_path):
-  for i in range(len(downloaded_result_list)):
+def save_crop_images(detection_result_list, image_path):
+  for i in range(len(detection_result_list)):
     res = downloaded_result_list[i]
     boxes = res["detection_boxes"]
     class_names = res["detection_class_entities"]
     scores = res["detection_scores"]
     max_area = 0
-    img = load_image(image_path[i])
+    img = Image.open(image_path[i])
     im_width, im_height = img.size
     for j in range(min(boxes.shape[0], 10)):
       if scores[j] >= 0.1:
@@ -90,7 +90,7 @@ module_handle = "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_re
 detector = hub.load(module_handle).signatures['default']
 
 inputs = [
-  gr.inputs.Image(type='file', label="Image1"),
+  gr.inputs.Image(type="pil", label="Image1"),
   gr.inputs.Image(type='file', label="Image2"),
   gr.inputs.Image(type='file', label="Image3"),
   gr.inputs.Image(type='file', label="Image4")
@@ -127,12 +127,18 @@ img=('brand_images/Burberry.jpg', 'brand_images/Prada.jpg', 'brand_images/ThomBr
      'brand_images/MiuMiu.jpg','brand_images/Hermes.jpg','brand_images/SaintLaurent.jpg','brand_images/LeMaire.jpg', 'brand_images/CommeDesGarcons.jpg',
      'brand_images/OffWhite.jpg''brand_images/Dior.jpg','brand_images/Gucci.jpg')
 
+filename1='imageinput/image1'
+filename2='imageinput/image2'
+filename3='imageinput/image3'
+filename4='imageinput/image4'
+
 def processing(image1, image2, image3, image4):
-  image_list=[]
-  image_list.append(imagesave(image1))
-  image_list.append(imagesave(image2))
-  image_list.append(imagesave(image3))
-  image_list.append(imagesave(image4))
+    if not os.path.exists(filename):
+        os.makedirs(filename)
+    image1.save(filename, format="JPEG")
+    image2.save(filename, format="JPEG")
+    image3.save(filename, format="JPEG")
+    image4.save(filename, format="JPEG")
 
   result_list=run_detector(detector, image_list)
   save_crop_images(result_list, image_list)
