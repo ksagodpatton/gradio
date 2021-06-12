@@ -60,6 +60,8 @@ def run_detector(detector, downloaded_image_list):
 
   return result_list
 
+resized_filelist=['imageinput/resized1.jpg', 'imageinput/resized2.jpg', 'imageinput/resized3.jpg', 'imageinput/resized4.jpg']
+
 def save_crop_images(detection_result_list, image_path):
   ymin_r, xmin_r, ymax_r, xmax_r = 0, 0, 1, 1
   for i in range(len(detection_result_list)):
@@ -88,7 +90,7 @@ def save_crop_images(detection_result_list, image_path):
     # foldername = '/'.join(fplist)
     # if not os.path.exists(foldername):
       # os.makedirs(foldername)
-    resized.save(image_path[i], format="JPEG", quality=90)
+    resized.save(resized_filelist[i], format="JPEG", quality=90)
     #display_image(resized)
 x
 
@@ -124,34 +126,29 @@ img=('brand_images/Burberry.jpg', 'brand_images/Prada.jpg', 'brand_images/ThomBr
      'brand_images/MiuMiu.jpg','brand_images/Hermes.jpg','brand_images/SaintLaurent.jpg','brand_images/LeMaire.jpg', 'brand_images/CommeDesGarcons.jpg',
      'brand_images/OffWhite.jpg''brand_images/Dior.jpg','brand_images/Gucci.jpg')
 
-filename1='imageinput/image1'
-filename2='imageinput/image2'
-filename3='imageinput/image3'
-filename4='imageinput/image4'
+filename1='imageinput/image1.jpg'
+filename2='imageinput/image2.jpg'
+filename3='imageinput/image3.jpg'
+filename4='imageinput/image4.jpg'
 
 def processing(image1, image2, image3, image4):
     filename_list=[]
     
-    if not os.path.exists(filename1):
-        os.makedirs(filename1)
+    if not os.path.exists('imageinput'):
+        os.makedirs('imageinput')
+        
     image1.save(filename1, format="JPEG", quality=90)
         
     filename_list.append(filename1)
-    
-    if not os.path.exists(filename2):
-        os.makedirs(filename2)
+
     image2.save(filename2, format="JPEG", quality=90)
         
     filename_list.append(filename2)
-    
-    if not os.path.exists(filename3):
-        os.makedirs(filename3)
+
     image3.save(filename3, format="JPEG", quality=90)
         
     filename_list.append(filename3)
     
-    if not os.path.exists(filename4):
-        os.makedirs(filename4)
     image4.save(filename4, format="JPEG", quality=90)
         
     filename_list.append(filename4)
@@ -163,23 +160,18 @@ def processing(image1, image2, image3, image4):
   test_transforms = transforms.Compose([transforms.ToTensor(),
      transforms.Normalize((0.480, 0.437, 0.425), (0.257, 0.247, 0.245))])
   
-  for image in image_list:
-    cropped_images.append(to_pil_image(load_img(image)))
-    
-
-  for cropped_image in cropped_images:
-    image_tensor = test_transforms(cropped_image).float() 
+  for resized in resized_filelist:
+    imgopen=Image.open(resized) 
+    image_tensor = test_transforms(imgopen).float()
     image_tensor = image_tensor.unsqueeze(0)
     input = Variable(image_tensor)
     input = input.to('cpu')
     output = model(input)
-    index += output.data.cpu().numpy()
+    index += output
 
   idx=(index.argmax(dim=1)).int()
-  for image in image_list:
-    os.remove(image)
   
-  return to_pil_image(load_image(img[idx])), brands[idx], introductions[idx]
+  return Image.open(img[idx]), brands[idx], introductions[idx]
 
 outputs = [gr.outputs.Image(), gr.outputs.Textbox(), gr.outputs.Textbox()]
 
