@@ -92,7 +92,6 @@ def save_crop_images(detection_result_list, image_path):
       # os.makedirs(foldername)
     resized.save(resized_filelist[i], format="JPEG", quality=90)
     #display_image(resized)
-x
 
 inputs = [
   gr.inputs.Image(type="pil", label="Image1"),
@@ -152,26 +151,22 @@ def processing(image1, image2, image3, image4):
     image4.save(filename4, format="JPEG", quality=90)
         
     filename_list.append(filename4)
-
-
-  result_list=run_detector(detector, filename_list)
-  save_crop_images(result_list, filename_list)
-  cropped_images=[]
-  test_transforms = transforms.Compose([transforms.ToTensor(),
-     transforms.Normalize((0.480, 0.437, 0.425), (0.257, 0.247, 0.245))])
-  
-  for resized in resized_filelist:
-    imgopen=Image.open(resized) 
-    image_tensor = test_transforms(imgopen).float()
-    image_tensor = image_tensor.unsqueeze(0)
-    input = Variable(image_tensor)
-    input = input.to('cpu')
-    output = model(input)
-    index += output
-
-  idx=(index.argmax(dim=1)).int()
-  
-  return Image.open(img[idx]), brands[idx], introductions[idx]
+    
+    result_list=run_detector(detector, filename_list)
+    save_crop_images(result_list, filename_list)
+    test_transforms = transforms.Compose([transforms.ToTensor(),
+                                          transforms.Normalize((0.480, 0.437, 0.425), (0.257, 0.247, 0.245))])
+    for resized in resized_filelist:
+        imgopen=Image.open(resized) 
+        image_tensor = test_transforms(imgopen).float()
+        image_tensor = image_tensor.unsqueeze(0)
+        input = Variable(image_tensor)
+        input = input.to('cpu')
+        output = model(input)
+        index += output
+    
+    idx=(index.argmax(dim=1)).int()
+    return Image.open(img[idx]), brands[idx], introductions[idx]
 
 outputs = [gr.outputs.Image(), gr.outputs.Textbox(), gr.outputs.Textbox()]
 
